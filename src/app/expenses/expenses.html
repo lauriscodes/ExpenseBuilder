@@ -1,0 +1,68 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      {{ building()?.address }}
+    </mat-card-title>
+    <mat-card-subtitle>
+      {{ building()?.apartments }} apartments
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-form-field>
+      <mat-label>Choose a date</mat-label>
+      <input [matDatepicker]="picker" matInput>
+      <mat-datepicker-toggle [for]="picker" matIconSuffix/>
+      <mat-datepicker #picker startView="year"/>
+    </mat-form-field>
+    <mat-accordion multi>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Standard expenses</mat-panel-title>
+          <mat-panel-description>
+            {{ total() | currency }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <form [formGroup]="form">
+          <mat-form-field>
+            <mat-label>Electricity</mat-label>
+            <input formControlName="electricity" matInput>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Water</mat-label>
+            <input formControlName="water" matInput>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Cleaning</mat-label>
+            <input formControlName="cleaning" matInput>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Elevator</mat-label>
+            <input formControlName="elevator" matInput>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Heating</mat-label>
+            <input formControlName="heating" matInput>
+          </mat-form-field>
+        </form>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Apartment expenses</mat-panel-title>
+          <mat-panel-description>
+            {{ aTotal() | currency }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        @for (expense of aExpenses(); track $index) {
+          <mat-form-field>
+            <mat-label>Apartment {{ $index + 1 }}</mat-label>
+            <input
+              (ngModelChange)="updateExpense($index, $event)"
+              [name]="$index.toString()"
+              [ngModel]="expense"
+              matInput>
+          </mat-form-field>
+        }
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card-content>
+</mat-card>

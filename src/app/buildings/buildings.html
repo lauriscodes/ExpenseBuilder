@@ -1,0 +1,10 @@
+<h3 matSubheader>Select a building:</h3>
+<mat-nav-list>
+  @for (building of buildings(); track $index) {
+    <a [routerLink]="building.id" mat-list-item>
+      <mat-icon matListItemIcon>apartment</mat-icon>
+      <span matListItemTitle>{{ building.address }}</span>
+    </a>
+  }
+</mat-nav-list>
+
